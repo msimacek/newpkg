@@ -36,6 +36,7 @@ BuildRequires:  mvn(org.sonatype.sisu:sisu-guice)
 
 %if ! %{with bootstrap}
 BuildRequires:  mvn(io.takari:takari:pom:)
+BuildRequires:  mvn(io.takari.maven.plugins:takari-plugin-testing)
 %endif
 
 
@@ -74,9 +75,11 @@ This package provides %{summary}.
 </configuration>'
 %endif
 
-# XXX optional
+%if %{with bootstrap}
+# optional
 %pom_remove_dep -r :takari-plugin-testing
 rm -rf incrementalbuild/src/main/java/io/takari/incrementalbuild/maven/testing
+%endif
 
 %build
 %mvn_build -f
@@ -86,11 +89,8 @@ rm -rf incrementalbuild/src/main/java/io/takari/incrementalbuild/maven/testing
 
 
 %files -f .mfiles
-%license LICENSE.txt
-%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%license LICENSE.txt
 
 %changelog
 * Fri Mar 06 2015 Michael Simacek <msimacek@redhat.com> - 0.10.0-2
