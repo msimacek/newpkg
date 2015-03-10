@@ -1,11 +1,12 @@
-From 840cc2be11f74f0c2232513d7797ad85fdf307ed Mon Sep 17 00:00:00 2001
+From 73599d61d07d8c2a2c03e379cf97e580880145c7 Mon Sep 17 00:00:00 2001
 From: Michael Simacek <msimacek@redhat.com>
 Date: Tue, 3 Mar 2015 15:13:08 +0100
 Subject: [PATCH] Workaround for mtime truncation
 
 ---
  .../main/java/io/takari/incrementalbuild/spi/FilesystemWorkspace.java   | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../test/java/io/takari/incrementalbuild/spi/DeltaWorkspaceTest.java    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/incrementalbuild/src/main/java/io/takari/incrementalbuild/spi/FilesystemWorkspace.java b/incrementalbuild/src/main/java/io/takari/incrementalbuild/spi/FilesystemWorkspace.java
 index 3cc418b..d1a626c 100644
@@ -20,6 +21,19 @@ index 3cc418b..d1a626c 100644
        return ResourceStatus.UNMODIFIED;
      }
      return ResourceStatus.MODIFIED;
+diff --git a/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DeltaWorkspaceTest.java b/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DeltaWorkspaceTest.java
+index c8a3c5e..a8d249f 100644
+--- a/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DeltaWorkspaceTest.java
++++ b/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DeltaWorkspaceTest.java
+@@ -63,7 +63,7 @@ public class DeltaWorkspaceTest extends AbstractBuildContextTest {
+       if (file == null || !file.isFile() || !file.canRead()) {
+         return ResourceStatus.REMOVED;
+       }
+-      if (length == file.length() && lastModified == file.lastModified()) {
++      if (length == file.length() && lastModified / 1000 == file.lastModified() / 1000) {
+         return ResourceStatus.UNMODIFIED;
+       }
+       return ResourceStatus.MODIFIED;
 -- 
 2.1.0
 

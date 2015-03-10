@@ -1,0 +1,25 @@
+From dc14102211b41cc83b45e51d759509ab6e40683c Mon Sep 17 00:00:00 2001
+From: Michael Simacek <msimacek@redhat.com>
+Date: Tue, 10 Mar 2015 10:27:45 +0100
+Subject: [PATCH] Fix test folder creation
+
+---
+ .../java/io/takari/incrementalbuild/spi/DefaultBuildContextTest.java    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DefaultBuildContextTest.java b/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DefaultBuildContextTest.java
+index 4e85fad..92eb8bd 100644
+--- a/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DefaultBuildContextTest.java
++++ b/incrementalbuild/src/test/java/io/takari/incrementalbuild/spi/DefaultBuildContextTest.java
+@@ -1034,7 +1034,7 @@ public class DefaultBuildContextTest extends AbstractBuildContextTest {
+   @Test
+   public void testRegisterInputs_directoryMatching() throws Exception {
+     temp.newFolder("folder");
+-    temp.newFolder("folder/subfolder");
++    temp.newFolder("folder", "subfolder");
+     File f1 = temp.newFile("input1.txt");
+     File f2 = temp.newFile("folder/input2.txt");
+     File f3 = temp.newFile("folder/subfolder/input3.txt");
+-- 
+2.1.0
+

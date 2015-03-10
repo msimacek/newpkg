@@ -12,6 +12,7 @@ BuildArch:      noarch
 Source0:        https://github.com/takari/%{artifact_name}/archive/%{artifact_name}-%{version}.tar.gz
 
 Patch0:         0001-Workaround-for-mtime-truncation.patch
+Patch1:         0001-Fix-test-folder-creation.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.guava:guava)
@@ -54,6 +55,7 @@ This package provides %{summary}.
 %setup -q -n %{artifact_name}-%{artifact_name}-%{version}
 
 %patch0 -p1
+%patch1 -p1
 
 # XXX skip ITs for now
 %pom_disable_module incrementalbuild-its
@@ -82,7 +84,11 @@ rm -rf incrementalbuild/src/main/java/io/takari/incrementalbuild/maven/testing
 %endif
 
 %build
+%if %{with bootstrap}
 %mvn_build -f
+%else
+%mvn_build
+%endif
 
 %install
 %mvn_install
