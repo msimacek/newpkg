@@ -45,7 +45,7 @@ This package provides %{summary}.
 %pom_disable_module takari-plugin-testing-its
 
 %build
-%mvn_build -f
+%mvn_build
 
 %install
 %mvn_install
